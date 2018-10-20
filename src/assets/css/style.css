@@ -1,0 +1,471 @@
+/* -------------------------------- 
+
+Primary style
+
+-------------------------------- */
+
+*,
+*::after,
+*::before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+body {
+    font-size: 1.6rem;
+    font-family: "Open Sans", sans-serif;
+}
+
+svg {
+    max-width: 100%;
+}
+
+a {
+    text-decoration: none;
+}
+
+.mainpage {
+    background: url(../images/)
+}
+
+
+/* -------------------------------- 
+
+Main Components 
+
+-------------------------------- */
+
+.cd-nav-trigger {
+    /* hamburger icon */
+    position: fixed;
+    z-index: 3;
+    top: 20px;
+    left: 5%;
+    height: 44px;
+    width: 44px;
+    /* image replacement */
+    overflow: hidden;
+    text-indent: 100%;
+    white-space: nowrap;
+    background-color: white;
+    -webkit-transition: -webkit-transform 0.4s 0s, box-shadow 0s 0.4s;
+    -moz-transition: -moz-transform 0.4s 0s, box-shadow 0s 0.4s;
+    transition: transform 0.4s 0s, box-shadow 0s 0.4s;
+}
+
+.cd-nav-trigger span {
+    /* icon created in CSS */
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    bottom: auto;
+    right: auto;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -o-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+    width: 32px;
+    height: 4px;
+    border-radius: 3px;
+    background-color: white;
+}
+
+.cd-nav-trigger span::before,
+.cd-nav-trigger span:after {
+    /* upper and lower lines of the menu icon */
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: inherit;
+    border-radius: 3px;
+    /* Force Hardware Acceleration in WebKit */
+}
+
+.cd-nav-trigger span::before {
+    -webkit-transform-origin: right top;
+    -moz-transform-origin: right top;
+    -ms-transform-origin: right top;
+    -o-transform-origin: right top;
+    transform-origin: right top;
+    -webkit-transform: translateY(-10px);
+    -moz-transform: translateY(-10px);
+    -ms-transform: translateY(-10px);
+    -o-transform: translateY(-10px);
+    transform: translateY(-10px);
+}
+
+.cd-nav-trigger span::after {
+    -webkit-transform-origin: right bottom;
+    -moz-transform-origin: right bottom;
+    -ms-transform-origin: right bottom;
+    -o-transform-origin: right bottom;
+    transform-origin: right bottom;
+    -webkit-transform: translateY(10px);
+    -moz-transform: translateY(10px);
+    -ms-transform: translateY(10px);
+    -o-transform: translateY(10px);
+    transform: translateY(10px);
+}
+
+
+/* -------------------------------- 
+
+xnavigation 
+
+-------------------------------- */
+
+.cd-nav-container {
+    background: url(../images/个人中心底图.png) no-repeat;
+    background-size: 100% 100%;
+    position: fixed;
+    z-index: 4;
+    top: 0;
+    left: 0;
+    width: 500px;
+    height: 100%;
+    overflow-y: auto;
+    /* Force Hardware Acceleration in WebKit */
+    -webkit-transform: translateZ(-100%);
+    -moz-transform: translateZ(-100%);
+    -ms-transform: translateZ(-100%);
+    -o-transform: translateZ(-100%);
+    transform: translateZ(-100%);
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transform: translateX(-100%);
+    -moz-transform: translateX(-100%);
+    -ms-transform: translateX(-100%);
+    -o-transform: translateX(-100%);
+    transform: translateX(-100%);
+    -webkit-transition: -webkit-transform 0.4s 0s, box-shadow 0s 0.4s;
+    -moz-transition: -moz-transform 0.4s 0s, box-shadow 0s 0.4s;
+    transition: transform 0.4s 0s, box-shadow 0s 0.4s;
+}
+
+.cd-nav-container.is-visible {
+    background: url(../images/个人中心底图.png) no-repeat;
+    background-size: 100% 100%;
+    -webkit-transform: translateX(0);
+    -moz-transform: translateX(0);
+    -ms-transform: translateX(0);
+    -o-transform: translateX(0);
+    transform: translateX(0);
+    -webkit-overflow-scrolling: touch;
+    box-shadow: -4px 0 30px rgba(0, 0, 0, 0.2);
+    -webkit-transition: -webkit-transform 0.4s 0s, box-shadow 0s 0s;
+    -moz-transition: -moz-transform 0.4s 0s, box-shadow 0s 0s;
+    transition: transform 0.4s 0s, box-shadow 0s 0s;
+}
+
+.cd-nav-container header {
+    padding: 1.5em 0 0 6.25%;
+    height: 68px;
+    position: relative;
+}
+
+.cd-nav-container h3 {
+    font-size: 1.6rem;
+    font-weight: bold;
+    font-family: "Lora", serif;
+    text-transform: uppercase;
+    color: #5c4b51;
+}
+
+.cd-nav-identity {
+    height: 100px;
+    margin-top: 100px;
+    margin-left: 40px;
+    margin-bottom: 46px;
+}
+
+.cd-nav-identity-frame-avatar {
+    overflow: hidden;
+    width: 100px;
+    height: 100px;
+    border-radius: 50px;
+    border: 2px dashed white;
+}
+
+.cd-nav-identity-avatar {
+    width: 76px;
+    height: 76px;
+    border-radius: 38px;
+    overflow: hidden;
+    margin: 10px;
+}
+
+.cd-nav-identity-ID {
+    height: 100px;
+    margin-left: 35px;
+    margin-top: 20px;
+    position: absolute;
+}
+
+#name-id {
+    font-size: 40px;
+    font-weight: lighter;
+    color: white;
+    float: left;
+    margin-bottom: 10px;
+}
+
+#num-id {
+    font-size: 20px;
+    font-weight: lighter;
+    color: white;
+    float: left;
+}
+
+.cd-nav li {
+    width: 100%;
+    height: 100px;
+    font-size: 30px;
+    font-weight: lighter;
+    color: white;
+    float: left;
+    margin-left: 40px;
+}
+
+.cd-nav a {
+    display: block;
+    -webkit-transition: background-color 0.2s;
+    -moz-transition: background-color 0.2s;
+    transition: background-color 0.2s;
+    color: white;
+}
+
+.cd-nav span,
+.cd-nav em {
+    position: absolute;
+}
+
+.cd-nav span {
+    top: calc(50% - 48px);
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -moz-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    -o-transform: translateX(-50%);
+    transform: translateX(-50%);
+    height: 48px;
+    width: 48px;
+}
+
+.cd-nav span * {
+    -webkit-transition: stroke 0.2s;
+    -moz-transition: stroke 0.2s;
+    transition: stroke 0.2s;
+}
+
+.cd-nav em {
+    width: 100%;
+    left: 0;
+    top: calc(50% + 15px);
+    color: #5c4b51;
+    -webkit-transition: color 0.2s;
+    -moz-transition: color 0.2s;
+    transition: color 0.2s;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+}
+
+@-webkit-keyframes cd-shock {
+    0% {
+        -webkit-transform: rotate(0);
+    }
+    30% {
+        -webkit-transform: rotate(10deg);
+    }
+    60% {
+        -webkit-transform: rotate(-10deg);
+    }
+    100% {
+        -webkit-transform: rotate(0);
+    }
+}
+
+@-moz-keyframes cd-shock {
+    0% {
+        -moz-transform: rotate(0);
+    }
+    30% {
+        -moz-transform: rotate(10deg);
+    }
+    60% {
+        -moz-transform: rotate(-10deg);
+    }
+    100% {
+        -moz-transform: rotate(0);
+    }
+}
+
+@keyframes cd-shock {
+    0% {
+        -webkit-transform: rotate(0);
+        -moz-transform: rotate(0);
+        -ms-transform: rotate(0);
+        -o-transform: rotate(0);
+        transform: rotate(0);
+    }
+    30% {
+        -webkit-transform: rotate(10deg);
+        -moz-transform: rotate(10deg);
+        -ms-transform: rotate(10deg);
+        -o-transform: rotate(10deg);
+        transform: rotate(10deg);
+    }
+    60% {
+        -webkit-transform: rotate(-10deg);
+        -moz-transform: rotate(-10deg);
+        -ms-transform: rotate(-10deg);
+        -o-transform: rotate(-10deg);
+        transform: rotate(-10deg);
+    }
+    100% {
+        -webkit-transform: rotate(0);
+        -moz-transform: rotate(0);
+        -ms-transform: rotate(0);
+        -o-transform: rotate(0);
+        transform: rotate(0);
+    }
+}
+
+
+/* -------------------------------- 
+
+xshadow layer 
+
+-------------------------------- */
+
+.cd-overlay {
+    /* shadow layer visible when navigation is open */
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.35);
+    visibility: hidden;
+    opacity: 0;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-transition: opacity 0.4s 0s, visibility 0s 0.4s;
+    -moz-transition: opacity 0.4s 0s, visibility 0s 0.4s;
+    transition: opacity 0.4s 0s, visibility 0s 0.4s;
+}
+
+.cd-overlay.is-visible {
+    opacity: 1;
+    visibility: visible;
+    -webkit-transition: opacity 0.4s 0s, visibility 0s 0s;
+    -moz-transition: opacity 0.4s 0s, visibility 0s 0s;
+    transition: opacity 0.4s 0s, visibility 0s 0s;
+}
+
+
+/* -------------------------------- 
+
+xcontent 
+
+-------------------------------- */
+
+main {
+    position: relative;
+    height: 100vh;
+    overflow-x: hidden;
+    -webkit-transition: -webkit-transform 0.4s;
+    -moz-transition: -moz-transform 0.4s;
+    transition: transform 0.4s;
+    box-shadow: 0 0 30px #241d20;
+}
+
+main.scale-down {
+    -webkit-transform: scale(0.9);
+    -moz-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    -o-transform: scale(0.9);
+    transform: scale(0.9);
+}
+
+.cd-section {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+    -webkit-transform: translateX(100%);
+    -moz-transform: translateX(100%);
+    -ms-transform: translateX(100%);
+    -o-transform: translateX(100%);
+    transform: translateX(100%);
+    -webkit-transition: -webkit-transform 0s 0.4s;
+    -moz-transition: -moz-transform 0s 0.4s;
+    transition: transform 0s 0.4s;
+}
+
+.food {
+    width: 90%;
+    margin-left: 5%;
+}
+
+.food th {
+    width: ;
+    background-color: white;
+}
+
+.food tr {
+    background-color: white;
+}
+
+.cd-content {
+    background-color: #ffffff;
+    padding: 4em 0;
+}
+
+.cd-content p {
+    width: 90%;
+    max-width: 800px;
+    margin: 2em auto;
+    line-height: 2;
+    color: #78626a;
+}
+
+.no-js main,
+.no-js .cd-section {
+    height: auto;
+    overflow: visible;
+}
+
+.no-js .cd-section {
+    position: static;
+    -webkit-transform: translateX(0);
+    -moz-transform: translateX(0);
+    -ms-transform: translateX(0);
+    -o-transform: translateX(0);
+    transform: translateX(0);
+}
+
+.no-js .cd-nav-container {
+    width: 100%;
+    position: static;
+    -webkit-transform: translateX(0);
+    -moz-transform: translateX(0);
+    -ms-transform: translateX(0);
+    -o-transform: translateX(0);
+    transform: translateX(0);
+    height: auto;
+    overflow: visible;
+}
+
+.no-js .cd-nav li {
+    width: 50%;
+    float: left;
+}
