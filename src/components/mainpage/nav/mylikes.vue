@@ -1,5 +1,8 @@
 <template>
   <div id="main">
+    <div v-show="isempty" class="ifempty">
+      空空如也
+    </div>
     <div class="favors" v-for='favor in favors' :key="favor.num">
       <div class="favor">
         <div class="imge">
@@ -10,8 +13,10 @@
         <div class="foodinfos">
           <div class="foodname">{{favor.name}}</div>
           <div class="foodinfo">
-            <span class="price" style="float:left;font-size:1.4rem;color:red"><i class="fa fa-jpy fa-1x" aria-hidden="true"
-                style="color:red"></i>{{favor.price}}</span>
+            <div class="price" style="float:left;font-size:1.4rem;color:red"><i class="fa fa-jpy fa-1x" aria-hidden="true"
+                style="color:red"></i>
+              <div class="pricep">{{favor.price}}</div>
+            </div>
             <span class="address"><i class="fa fa-map-marker fa-1x" aria-hidden="true" style="color:none"></i>{{favor.address}}</span>
             <span class="cancel" style="float:right" id="cancelike" @click="cancellike(favor.id)"><i class="fa fa-heart fa-lg"
                 aria-hidden="true" style="color:red"></i>取消点赞</span>
@@ -29,6 +34,7 @@
     name: "mylikes", //点赞的菜品
     data() {
       return {
+        isempty: false,
         token: mainpage.token,
         favors: []
       }
@@ -44,6 +50,20 @@
         })
         .then(res => {
           // 使用ajax请求数据获取到users（数组）,所以this.users是数组
+          if (res.data == '') {
+            this.isempty = true
+          }
+          Object.keys(res.data).forEach(function (key) {
+            if (res.data[key].collection >= 99) {
+              res.data[key].collection = 99
+            }
+            if (res.data[key].likeCount >= 99) {
+              res.data[key].likeCount = 99
+            }
+            if (res.data[key].review >= 99) {
+              res.data[key].review = 99
+            }
+          })
           this.favors = res.data
         })
         .catch(function (error) {
@@ -115,7 +135,7 @@
   #main {
     width: 100%;
     height: 100%;
-    background: url(./myfavorites/个人中心底图.png) no-repeat;
+    background: url('../../sousuo/sousuo.png') no-repeat;
     background-size: 100%, 100%;
     display: flex;
     flex-direction: row;
@@ -169,24 +189,56 @@
   }
 
   .price {
-    max-width: 23%;
+    width: 25%;
     word-break: break-all;
+    max-height: 100%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+
+  .pricep {
+    width: 70%;
+    font-size: 0.8rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .address {
     word-break: break-all;
-    max-width: 32%;
+    max-width: 35%;
+    max-height: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .cancel {
     word-break: break-all;
-    max-width: 45%;
+    max-width: 40%;
+    font-size: 0.6rem;
   }
 
   @media screen and (max-width:321px) {
     .foodinfo {
       font-size: 0.8rem;
     }
+  }
+
+  .ifempty {
+    position: relative;
+    height: 10%;
+    width: 30%;
+    left: 35%;
+    top: 30%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    color: lightslategrey;
   }
 
 </style>

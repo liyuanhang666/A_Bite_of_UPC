@@ -1,5 +1,8 @@
 <template>
   <div class="hello">
+    <div v-show="isempty" class="ifempty">
+      空空如也
+    </div>
     <div class="table1" :key="page.foodnum" v-for="(page,index) in pages" v-if="page.state==0">
       <div :class="page.foodnum%2?classa:classb">
         <div :class="page.foodnum%2?imga:imgb">
@@ -36,7 +39,7 @@
       return {
         msg: "",
         yeshu: 1,
-        ok: true,
+        ok: false,
         pages: [],
         classa: "classa",
         classb: "classb",
@@ -49,7 +52,8 @@
         page3: "page3",
         star2: "star2",
         star1: "star1",
-        icon: "icon"
+        icon: "icon",
+        isempty: false
       };
     },
 
@@ -62,7 +66,7 @@
             Authorization: _token,
             foodId: imdex
           }
-        });
+        })
         this.pages.splice(index, 1);
         this.$axios
           .get("http://yb.upc.edu.cn:8084/foodshare/food/own", {
@@ -79,6 +83,7 @@
       }
     },
     created() {
+      document.title = '发布历史'
       let _token = sessionStorage.getItem("token");
       this.$axios
         .get("http://yb.upc.edu.cn:8084/foodshare/food/own", {
@@ -87,6 +92,9 @@
           }
         })
         .then(response => {
+          if (response.data == '') {
+            this.isempty = true
+          }
           Object.keys(response.data).forEach(function (key) {
             response.data[key].foodnum = key
           })
@@ -102,7 +110,7 @@
           }
         })
         .then(response => {
-          this.ok = response;
+          this.ok = response.data;
         })
         .catch(function (error) {
           console.log(error);
@@ -124,7 +132,7 @@
   }
 
   .hello {
-    background-image: url("sousuo.png");
+    background-image: url("../sousuo/sousuo.png");
     background-size: 100%;
     display: flex;
     flex-direction: row;
@@ -212,10 +220,16 @@
   }
 
   .des {
-    padding-top: 11%;
     width: 100%;
-    height: 60%;
+    height: 40%;
     font-size: 2vh;
+    line-height: 1.2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    color: #495060;
   }
 
   .page1 {
@@ -305,4 +319,17 @@
     color: #495060;
   }
 
+  .ifempty {
+    position: relative;
+    height: 10%;
+    width:30%;
+    left: 35%;
+    top: 30%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    color: lightslategrey;
+  }
 </style>

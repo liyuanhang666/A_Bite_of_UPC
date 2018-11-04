@@ -17,25 +17,30 @@
           </th>
         </table>
       </div>
-      <ul class="navlist font">
+      <ul class="navlist">
         <li>
           <router-link to="myfavorites">
-            <img :src="foodlist" alt="" height="35rem" width="auto"><span>美食清单</span>
+            <img :src="foodlist" alt="" height="24px" width="auto"><span>美食清单</span>
           </router-link>
         </li>
         <li>
           <router-link to="/mypublish">
-            <img :src="historyrelease" alt="" height="35rem" width="auto"><span>发布历史</span>
+            <img :src="historyrelease" alt="" height="24px" width="auto">
+            <Badge dot class="diff" :show-zero="false" :count="ok">
+              <a href="#" class="demo-badge difff">
+                发布历史
+              </a>
+            </Badge>
           </router-link>
         </li>
         <li>
           <router-link to="mylikes">
-            <img :src="myfavorites" alt="" height="35rem" width="auto"><span>我赞过的</span>
+            <img :src="myfavorites" alt="" height="24px" width="auto"><span>我赞过的</span>
           </router-link>
         </li>
         <li>
           <router-link to="/commenthistory">
-            <img :src="historycomment" alt="" height="35rem" width="auto"><span>评论历史</span>
+            <img :src="historycomment" alt="" height="24px" width="auto"><span>评论历史</span>
           </router-link>
         </li>
       </ul>
@@ -49,55 +54,46 @@
 
   export default {
     name: 'mpnav',
+    props: ['userinfo', 'ifpass'],
     components: {
       myfavorites,
     },
     data() {
       return {
+        ok: 0,
         navshow: false,
         foodlist: require('./美食清单.png'),
         historyrelease: require('./发布历史.png'),
         myfavorites: require('./我赞过的.png'),
         historycomment: require('./评论历史.png'),
-        studentID: {
-          username: "放肆爱吃鱼米饭",
-          userid: "8400399",
-          ybhead: require('./toux.png'),
-        }
+        studentID: {}
       }
     },
     mounted() {
-      if (sessionStorage.getItem("isrefreshed") !== '1') {
-        location.reload();
-      }
-      sessionStorage.setItem("isrefreshed", '1')
-      let _token = sessionStorage.getItem("token")
-      let url = 'http://yb.upc.edu.cn:8084/foodshare/user/info'
-      let data = {
-        Authorization: _token
-      }
-      this.$axios.get(url, {
-          params: {
-            Authorization: _token
-          }
-        })
-        .then(res => {
-          // 使用ajax请求数据获取到users（数组）,所以this.users是数组
-          this.studentID = res.data
-          this.studentID.ybhead = this.studentID.ybhead + ".jpg"
-        })
-        .catch(function (error) {
-          console.log(error)
-        })
+      console.log(this.userinfo)
     },
     methods: {},
-    created() {}
+    created() {},
+    watch: {
+      userinfo: function (val, oldval) {
+        if (val != '') {
+          let obj = JSON.parse(val)
+          sessionStorage.setItem('isinfoget', 1)
+          this.studentID = obj
+        }
+      },
+      ifpass: function (val, oldval) {
+        if (val === true) {
+          this.ok = 1
+        }
+      }
+    }
   }
 
 </script>
 <style scoped>
   #mpnav {
-    background: url('./个人中心底图.png');
+    background: url('../sousuo/sousuo.png');
     background-size: 100%, 100%;
     position: absolute;
     left: 0;
@@ -112,18 +108,21 @@
     height: 100%;
   }
 
-  .identity {
-    height: 10rem;
+  .font {
+    height: 17%;
     margin-top: 4rem;
     margin-left: 1.5rem;
-    margin-bottom: 1rem;
+  }
+
+  .identity {
+    height: 100%;
     z-index: 2;
   }
 
   .iframe-avatar {
     overflow: hidden;
-    width: 4rem;
-    height: 4rem;
+    width: 3.8rem;
+    height: 3.8rem;
     border-radius: 50%;
     border: 2px dashed white;
     display: flex;
@@ -133,8 +132,8 @@
   }
 
   .iavatar {
-    width: 3.6rem;
-    height: 3.6rem;
+    width: 3.2rem;
+    height: 3.2rem;
     border-radius: 50%;
     overflow: hidden;
   }
@@ -166,7 +165,7 @@
   }
 
   .navlist {
-    margin-top: 1rem;
+    height: 70%;
   }
 
   .navlist a {
@@ -176,34 +175,38 @@
     -moz-transition: background-color 0.2s;
     transition: background-color 0.2s;
     color: white;
-    width: 10rem;
+    width: 8rem;
     height: 2.5rem;
     border-bottom: 2px dashed rgb(180, 180, 180);
-    padding-left: 0.8rem;
+    padding-left: 0.6rem;
     text-decoration: none;
   }
 
   .navlist li {
     width: 13rem;
     height: 6rem;
-    font-size: 1.4rem;
+    font-size: 1.1rem;
     font-weight: lighter;
     color: white;
     float: left;
     margin-left: 3rem;
     list-style: none;
-
   }
 
   .navlist span {
     width: 8rem;
-    margin-bottom: 0.4rem;
-    margin-left: 0.7rem;
+    margin-bottom: 0.2rem;
+    margin-left: 0.3rem;
   }
 
   @media screen and (max-width:361px) {
     .navlist li {
-      height: 5rem;
+      font-size: 1rem;
+      height: 3rem;
+    }
+
+    .navlist a {
+      padding-left: 0.8rem;
     }
   }
 
@@ -255,13 +258,32 @@
     .navlist a {
       width: 8rem;
       height: 2rem;
-      font-size: 1rem;
     }
   }
 
   .ybhead {
     height: 100%;
     width: 100%;
+  }
+
+  .diff {
+    width: 70% !important;
+  }
+
+  .difff {
+    border: 0 !important;
+  }
+
+  @media screen and (max-width: 321px) {
+    .diff a {
+      padding-left: 0.4rem;
+    }
+  }
+
+</style>
+<style>
+  .ivu-badge-dot {
+    top: 14px !important;
   }
 
 </style>

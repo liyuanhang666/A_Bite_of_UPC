@@ -9,12 +9,9 @@ import iView from 'iview'
 import 'iview/dist/styles/iview.css'
 import 'font-awesome/css/font-awesome.css'
 import Axios from 'Axios'
-import utils from './components/utils'
-Vue.prototype.$utils = utils
-let id = utils.getvq('verify_request')
 
-Axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
-Axios.defaults.headers.get['Content-Type'] = 'application/x-www-form-urlencoded';
+Axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+Axios.defaults.headers.get['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
 Axios.defaults.transformRequest = [function (data) {
     let ret = ''
     for (let it in data) {
@@ -25,6 +22,8 @@ Axios.defaults.transformRequest = [function (data) {
 Vue.prototype.$axios=Axios
 Vue.use(iView)
 Vue.config.productionTip = false
+
+Vue.prototype.$bus = new Vue();
 
 /* eslint-disable no-new */
 new Vue({

@@ -1,14 +1,14 @@
 <template>
   <div id="app">
-    
+
    <router-view></router-view>
   </div>
 </template>
 
 <script>
 export default {
-//   name: 'App', 
-//    data () { 
+//   name: 'App',
+//    data () {
 //             return {
 //                 value: ''
 //             }
@@ -22,6 +22,7 @@ export default {
 </script>
 
 <style>
+@import './common/font/font.css';
 
 html{
       height: 100%;

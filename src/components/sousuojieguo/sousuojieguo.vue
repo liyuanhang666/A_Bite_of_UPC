@@ -1,5 +1,8 @@
 <template>
   <div class="hello">
+    <div v-show="isempty" class="ifempty">
+      空空如也
+    </div>
     <div class="table1" :key="page.foodnum" v-for="page in pages">
       <router-link :to="{path:'/food',query: {foodid: page.id}}">
         <div :class="page.foodnum%2?classa:classb">
@@ -17,10 +20,13 @@
           </div>
           <div :class="page.foodnum%2?fonta:fontb">
             <div class="name">{{page.name}}</div>
-            <div class="price"><span style="color:red;font-family:Arial">&yen;{{page.price}}</span> <span style="float:right">
-                <Icon type="ios-location-outline"></Icon> {{page.address}}
-              </span></div>
-            <div class="des"><span>{{page.detail}}</span></div>
+            <div class="price">
+              <span style="color:red;font-family:Arial">&yen;{{page.price}}</span>
+            </div>
+            <div class="address">
+              <div style="width:10%"><Icon type="ios-location-outline"></Icon></div> <div class="addressp">{{page.address}}</div>
+            </div>
+            <div class="des">{{page.detail}}</div>
           </div>
         </div>
       </router-link>
@@ -35,11 +41,12 @@
     name: "result",
     data() {
       return {
+        isempty: false,
         yeshu: 2,
         boxname: sousuo.boxname,
         suosuokind: sousuo.suosuokind,
         sousuoname: sousuo.sousuoname,
-        pages: [],
+        pages: 'asdasd',
         classa: "classa",
         classb: "classb",
         fonta: "fonta",
@@ -54,15 +61,17 @@
       };
     },
     created() {
-      var obj = sessionStorage.getItem("foods")
-      var jieguo = JSON.parse(obj)
-      Object.keys(jieguo).forEach(function (key) {
-        jieguo[key].foodnum = key
-      })
-      this.pages = jieguo;
-      if (sessionStorage.getItem("freshed") !== '1') {
+      document.title = '舌尖上的石大'
+      let str = sessionStorage.getItem('foods')
+      let isfreshed = sessionStorage.getItem('freshed')
+      let obj = JSON.parse(str)
+      this.pages = obj
+      if (isfreshed == '0' && str != '') {
         sessionStorage.setItem("freshed", '1')
-        location.reload();
+        location.reload()
+      }
+      if (str === '[]' || str === null) {
+        this.isempty = true
       }
     }
   };
@@ -81,7 +90,7 @@
     width: 100%;
     height: 100%;
     padding-top: 2%;
-    background-image: url("sousuo.png");
+    background-image: url("../sousuo/sousuo.png");
     background-size: 100%;
     display: flex;
     flex-direction: row;
@@ -177,24 +186,47 @@
 
   .name {
     width: 100%;
-    height: 10%;
+    height: 20%;
     font-size: 4vw;
     color: azure;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .price {
     width: 100%;
-    height: 10%;
-    padding-top: 12%;
+    height: 20%;
     font-size: 4vw;
     color: azure;
   }
 
-  .des {
-    padding-top: 15%;
+  .address {
     width: 100%;
-    height: 71%;
+    height: 20%;
+    font-size: 4vw;
+    color: azure;
+    display: flex;
+    flex-direction: row;
+
+  }
+
+  .addressp {
+    width:85%;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+  }
+
+  .des {
+    width: 100%;
+    height: 40%;
     font-size: 2vh;
+    line-height: 1.2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
     color: #495060;
   }
 
@@ -281,5 +313,18 @@
   border-bottom-left-radius: 25%;
   border-bottom-right-radius: 25%;
 } */
+  .ifempty {
+    position: relative;
+    height: 10%;
+    width: 30%;
+    left: 35%;
+    top: 30%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    color: lightslategrey;
+  }
 
 </style>

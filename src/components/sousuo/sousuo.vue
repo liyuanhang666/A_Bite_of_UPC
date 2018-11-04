@@ -54,10 +54,10 @@
       </div>
     </div>
 
-    <input type="text" id="inputbox" v-model="sousuo" @focus="myFocus(this,'black')" style=" marginLeft:10%;marginTop:9%; text-align:center;height:35px;color:grey; width:80%; border-radius:25px; border: 1px solid #dddee1;outline:0; " />
+    <input type="text" id="inputbox" v-model="sousuo" @focus="myFocus(this,'black')" style=" marginLeft:10%;marginTop:10%; text-align:center;height:35px;color:grey; width:80%; border-radius:25px; border: 1px solid #dddee1;outline:0; " />
 
     <router-link to="/result">
-      <i-button type="ghost" size="large" shape="circle" @click="give" style="marginLeft:33%;marginTop:5%;color:white;">开启美食之旅</i-button>
+      <i-button type="ghost" size="large" shape="circle" @click="give" style="width:30%;marginLeft:35%;marginTop:5%;color:white;">开启美食之旅</i-button>
     </router-link>
   </div>
 </template>
@@ -88,7 +88,7 @@
           },
           {
             id: 4,
-            name: "主食"
+            name: "综合"
           },
 
           {
@@ -169,6 +169,9 @@
         ]
       };
     },
+    created () {
+      document.title = '搜索菜品'
+    },
     methods: {
       text: function (i) {
         if (document.getElementById(`${i}`).style.borderColor === "grey") {
@@ -203,7 +206,6 @@
         // console.log(this.shuru)
         if (inputbox.value == "✎探索你的味蕾" || inputbox.value == "") {
           let _token = sessionStorage.getItem("token");
-
           this.$axios
             .get("http://yb.upc.edu.cn:8084/foodshare/food/kind", {
               params: {
@@ -212,8 +214,24 @@
               }
             })
             .then(response => {
-              var rest1 = JSON.stringify(response.data)
-              window.sessionStorage.setItem("foods", rest1);
+              var rest1 = response.data
+              if (rest1 != '') {
+                Object.keys(rest1).forEach(function (key) {
+                  rest1[key].foodnum = key
+                  if (rest1[key].collection >= 99) {
+                    rest1[key].collection = 99
+                  }
+                  if (rest1[key].likeCount >= 99) {
+                    rest1[key].likeCount = 99
+                  }
+                  if (rest1[key].review >= 99) {
+                    rest1[key].review = 99
+                  }
+                })
+              }
+              var rest1 = JSON.stringify(rest1)
+              console.log(rest1)
+              sessionStorage.setItem('foods', rest1)
               this.sousuokind = 2;
             })
             .catch(function (error) {
@@ -230,8 +248,24 @@
               }
             })
             .then(response => {
-              var rest2 = JSON.stringify(response.data)
-              window.sessionStorage.setItem("foods", rest2);
+              var rest2 = response.data
+              if (rest2 != '') {
+                Object.keys(rest2).forEach(function (key) {
+                  rest2[key].foodnum = key
+                  if (rest2[key].collection >= 99) {
+                    rest2[key].collection = 99
+                  }
+                  if (rest2[key].likeCount >= 99) {
+                    rest2[key].likeCount = 99
+                  }
+                  if (rest2[key].review >= 99) {
+                    rest2[key].review = 99
+                  }
+                })
+              }
+              var rest2 = JSON.stringify(rest2)
+              console.log(rest2)
+              sessionStorage.setItem('foods', rest2)
               this.sousuokind = 1;
             })
             .catch(function (error) {

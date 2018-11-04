@@ -14,8 +14,8 @@
                 <Icon type="ios-location-outline"></Icon> {{page.address}}
               </span></div>
             <div class="des">
-              <div style="height:20%">{{page.detail}}</div>
-              <div style="height:80%;overflow:hidden;width:100%;text-overflow:hidden;word-wrap:break-word;" >{{page.reviewDetail}}</div>
+              <div class="det" style="height:20%;word-wrap:nowrap">{{page.detail}}</div>
+              <div class="rdet" style="height:80%;overflow:hidden;width:100%;text-overflow:hidden;word-wrap:break-word;" >{{page.reviewDetail}}</div>
             </div>
           </div>
         </div>
@@ -73,6 +73,7 @@
       }
     },
     created() {
+      document.title = '评论历史'
       let _token = sessionStorage.getItem("token");
       this.$axios
         .get("http://yb.upc.edu.cn:8084/foodshare/food/review", {
@@ -105,7 +106,7 @@
   }
 
   .hello {
-    background-image: url("sousuo.png");
+    background-image: url("../sousuo/sousuo.png");
     background-size: 100%;
     display: flex;
     flex-direction: row;
@@ -197,6 +198,28 @@
     width: 100%;
     height: 60%;
     font-size: 2vh;
+  }
+
+  .det {
+    width: 100%;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+  }
+
+  .rdet {
+    width: 100%;
+    height:80%;
+    overflow:hidden;
+    width:100%;
+    word-wrap:break-word;
+    line-height: 1.2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5;
+    color: #495060;
   }
 
   .page1 {

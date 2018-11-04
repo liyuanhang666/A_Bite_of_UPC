@@ -2,7 +2,7 @@
   <main class="food">
     <div class="foodframe" style="marigin-left:-2px">
       <div class="foodphoto">
-        <img :src="foodinfo.imgurl" width="100%" height="100%">
+        <img :src="foodinfo.imgurl" width="100%" height="auto">
       </div>
       <div class="foodn" align="center">
         <div class="namebg">
@@ -12,57 +12,43 @@
         </div>
       </div>
       <div class="foodinfo">
-        <div class="foodp">
-          <i class="fa fa-map-marker fa-1x" style="color:white;height:1.6rem"></i>
-          {{foodinfo.address}}
+        <div class="foodpp">
+          <div class="foodp">
+            <i class="fa fa-map-marker fa-1x" style="color:white;height:1.6rem"></i>
+            {{foodinfo.address}}
+          </div>
+          <div class="fprice">
+            ￥{{foodinfo.price}}
+          </div>
         </div>
-        <div class="fprice">
-          ￥{{foodinfo.price}}
+        <div class="finfo">
+          {{foodinfo.detail}}
         </div>
-        <table>
-          <tr>
-            <th colspan="2">
-              <div class="finfo">
-                {{foodinfo.detail}}
-              </div>
-            </th>
-          </tr>
-          <tr>
-            <th style="width:45%"></th>
-            <th style="width:55%">
-              <div id="favor" :class="this.iscollect!=true?favor0:favor1" @click="collect">{{collection}}</div>
-              <div id="comment" @click="makereview">{{foodinfo.review}}</div>
-              <div id="like" :class="this.islike!=false?like1:like0" @click="likeit">{{likecount}}</div>
-            </th>
-          </tr>
-        </table>
-        <fieldset class="foodcomment" align="center">
-          <legend>评论</legend>
-          <div class="comments-container">
-            <div class="comments" v-for='comment in comments' :key="comment.num">
-              <div class="ico-container">
-                <div class="ico">
-                  <img :src="comment.ybhead" alt="">
-                </div>
-              </div>
-              <div class="id-container">
-                <div class="name">{{comment.ybname}}</div>
-                <div class="time">{{comment.createtime}}</div>
-                <div class="info">{{comment.detail}}</div>
+        <div class="operation">
+          <div id="favor" :class="this.iscollect!=true?favor0:favor1" @click="collect">{{collection}}</div>
+          <div id="comment" @click="makereview">{{foodinfo.review}}</div>
+          <div id="like" :class="this.islike!=false?like1:like0" @click="likeit">{{likeCount}}</div>
+        </div>
+      </div>
+      <fieldset class="foodcomment" align="center">
+        <legend>评论</legend>
+        <div class="comments-container">
+          <div class="comments" v-for='comment in comments' :key="comment.num">
+            <div class="ico-container">
+              <div class="ico">
+                <img :src="comment.ybhead" alt="">
               </div>
             </div>
+            <div class="id-container">
+              <div class="name">{{comment.ybname}}</div>
+              <div class="time">{{comment.createtime}}</div>
+              <div class="info">{{comment.detail}}</div>
+            </div>
           </div>
-        </fieldset>
-      </div>
+        </div>
+      </fieldset>
     </div>
-    <!--<fieldset class="foodrec"align="center">
-      <legend>推荐</legend>
-      <div class="recfoods">
-          <div v-for="item in recfoods" :key="item.num" class="recfood">
-            <img :src="item.pic" alt="">
-          </div>
-      </div>
-    </fieldset>-->
+    </div>
     <div class="reviewfield" v-show="isreview">
       <Input type="text" v-model="reviewdetail" placeholder="请输入您的评论..." />
       <Button @click="pushreview">发布评论</Button>
@@ -85,22 +71,12 @@
         islike: null,
         collection: '',
         comment: '',
-        likecount: '',
+        likeCount: '',
         favor0: "favor0",
         favor1: "favor1",
         like0: "like0",
         like1: "like1",
-        comments: [],
-        recfoods: [{
-            pic: "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=4083089039,1018603977&fm=27&gp=0.jpg",
-          },
-          {
-            pic: "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=4083089039,1018603977&fm=27&gp=0.jpg",
-          },
-          {
-            pic: "https://ss0.bdstatic.com/70cFuHSh_Q1YnxGkpoWK1HF6hhy/it/u=4083089039,1018603977&fm=27&gp=0.jpg",
-          },
-        ]
+        comments: []
       }
     },
     methods: {
@@ -128,10 +104,10 @@
       likeit() {
         if (this.islike === false) {
           this.islike = true;
-          this.likecount++;
+          this.likeCount++;
         } else if (this.islike === true) {
           this.islike = false;
-          this.likecount--;
+          this.likeCount--;
         }
         let url = 'http://yb.upc.edu.cn:8084/foodshare/food/like'
         let _token = sessionStorage.getItem("token")
@@ -182,11 +158,12 @@
       Object.keys(Foods).forEach(function (key) {
         if (foodId === Foods[key].id.toString()) {
           foodInfo = Foods[key]
+          document.title = foodInfo.name
         }
       })
       this.foodinfo = foodInfo
       this.collection = foodInfo.collection
-      this.likecount = foodInfo.likecount
+      this.likeCount = foodInfo.likeCount
       this.$axios.get('http://yb.upc.edu.cn:8084/foodshare/collect/check', {
           params: {
             Authorization: _token,
@@ -209,7 +186,7 @@
           params: {
             Authorization: _token,
             foodId: foodId,
-            pageSize: 10,
+            pageSize: 100,
             page: 0
           }
         })
@@ -251,10 +228,13 @@
   #comment {
     background: url('./food/comment0.png');
     background-size: 100% 100%;
-    margin-left: 2rem;
     color: white;
-    padding-top: 0.6rem;
     height: 2rem;
+    width: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
   }
 
   .like0 {
@@ -263,10 +243,13 @@
 
   #like {
     background-size: 100% 100%;
-    margin-left: 2rem;
     color: white;
-    padding-top: 0.6rem;
     height: 2rem;
+    width: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
   }
 
   .like1 {
@@ -288,13 +271,17 @@
     background-repeat: "no-repeat";
     color: white;
     height: 2rem;
-    padding-top: 0.6rem;
+    width: 2rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
   }
 
   .food {
-    background: url('./upload/个人中心底图.png');
+    background: url('./sousuo/sousuo.png');
     background-size: 100%, 100%;
-    min-height: 100%;
+    min-height: 22rem;
     padding-top: 1rem;
     width: 100%;
     overflow-x: hidden;
@@ -303,21 +290,31 @@
 
   .finfo {
     min-height: 1rem;
-    width: 90%;
+    width: 80%;
     margin-bottom: 2rem;
-    margin-left: 7%;
+    margin-left: 10%;
     color: white;
     text-align: left;
     text-indent: 2rem;
+    font-size: 0.8rem;
+    word-wrap: break-all;
   }
 
   .foodframe {
     width: 92%;
-    height: 46rem;
+    min-height: 46rem;
     margin-left: 4%;
     border: 2px gray dashed;
     border-radius: 2rem;
     padding-top: 0.1rem;
+  }
+
+  .operation {
+    width: 60%;
+    margin-left: 40%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
   }
 
   .foodcomment {
@@ -346,7 +343,7 @@
 
   .foodphoto {
     width: 98%;
-    height: 12rem;
+    min-height: 2rem;
     border-radius: 1.6rem;
     margin-top: 0.1rem;
     margin-left: 1%;
@@ -362,6 +359,7 @@
   .namebg {
     display: inline-block;
     height: 1rem;
+    min-width: 3rem;
     margin-top: 1rem;
     background: rgba(0, 0, 0, 0.6);
     height: 2.6rem;
@@ -369,25 +367,32 @@
     border: 2px gray dashed;
     border-radius: 1.3rem;
     box-shadow: black 0rem 0rem 0.1rem 0.1rem;
+  }
+
+  .foodname {
+    display: inline-block;
+    height: 1.6rem;
     font-size: 1.2rem;
-    padding-left: 1rem;
-    padding-right: 1rem;
-    padding-top: 0.4rem;
+    font-weight: lighter;
+    min-width: 3rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+    margin-top: 0.4rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    white-space: nowrap;
   }
 
   .foodinfo {
     width: 100%;
     min-height: 8rem;
+    display: flex;
+    flex-direction: column;
   }
 
-  .foodinfo table {
+  .foodpp {
     width: 100%;
-    min-height: 2rem;
-  }
-
-  .foodinfo table th {
-    width: 100%;
-    min-height: 2rem;
+    height: 2rem;
   }
 
   .foodp {
@@ -397,7 +402,8 @@
     top: 0;
     left: 1rem;
     float: left;
-    font-size: 0.5rem;
+    font-size: 0.8rem;
+    word-wrap: break-word;
     color: rgb(210, 212, 211)
   }
 
