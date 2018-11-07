@@ -4,7 +4,7 @@
       <div style="margin-top:2%;">
         <p style="text-align:center;color:white;fontSize:120%;margin-top:34%">您推荐的美食已通过审核</p>
         <img :src="src1" style="width:100%;">
-        <p style="text-align:center;color:white;fontSize:120%;">20网薪已发入你的账户</p>
+        <p style="text-align:center;color:white;fontSize:120%;">20网薪稍后将发入你的账户</p>
       </div>
     </Modal>
   </div>

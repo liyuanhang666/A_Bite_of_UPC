@@ -392,13 +392,13 @@
 
   .foodpp {
     width: 100%;
-    height: 2rem;
+    min-height: 3rem;
   }
 
   .foodp {
     position: relative;
-    min-width: 2rem;
-    height: 2rem;
+    width: 100%;
+    height: 100%;
     top: 0;
     left: 1rem;
     float: left;
@@ -409,11 +409,14 @@
 
   .fprice {
     position: relative;
-    width: 3rem;
+    width: 100%;
     top: 0;
+    height: 100%;
+    word-wrap: break-all;
     right: 1rem;
     float: right;
-    font-size: 1.5rem;
+    text-align: right;
+    font-size: 1.2rem;
     color: red;
   }
 

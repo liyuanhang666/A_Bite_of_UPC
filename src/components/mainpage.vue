@@ -77,6 +77,7 @@
     },
     created() {
       sessionStorage.setItem('isinfoget', '0')
+      sessionStorage.setItem('adminpage', '1')
       document.title = '舌尖上的石大'
       var _this = this
       var VQ = this.GetQueryString("verify_request")
@@ -158,6 +159,22 @@
                           sessionStorage.setItem('isinfoget', '1')
                           location.reload()
                         }
+                        let url = 'http://yb.upc.edu.cn:8084/foodshare/manage/login'
+                        let _token = sessionStorage.getItem("token")
+                        console.log(_token)
+                        this.$axios.get(url, {
+                            params: {
+                              Authorization: _token
+                            }
+                          })
+                          .then(rsp => {
+                            console.log(rsp.data)
+                            if (rsp.data == true) {
+                              this.ifadmin = true
+                            }
+                          })
+                          .catch(error => {
+                          })
                       })
                     }
                   })
@@ -170,7 +187,6 @@
 
 </script>
 <style scoped>
-
   @font-face {
     font-family: 'XinHuaKaiTi';
     src: url('./mainpage/XinHuaKaiTi.ttf');

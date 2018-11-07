@@ -2,10 +2,17 @@
   <main class="upload-container" align="center">
     <div style="width:100%;min-height:100%">
       <div id="udframe">
-        <div id="photoud" v-show="isbeforeupload">
-          <img :src="udico" id="udico">
-          <input class="puico" type="file" value="" id="file" accept="image/*" @change="uploadConfig" style="none"></input><span
-            class="uphoto">上传照片</span>
+        <div id="photoud" v-show="ifnotdown">
+          <div class="uploading" v-show="isuploading">
+            <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+            <span class="sr-only"></span>
+            <div class="uploading-text">正在上传</div>
+          </div>
+          <div class="bfupload" v-show="isbeforeupload">
+            <img :src="udico" id="udico">
+            <input class="puico" type="file" value="" id="file" accept="image/*" @change="uploadConfig" style="none"></input>
+            <span class="uphoto">上传照片</span>
+          </div>
         </div>
         <img :src="picurl" class="picurl">
         <div class="upload upinput">
@@ -61,6 +68,8 @@
       return {
         isbeforeupload: true,
         isreturn: false,
+        isuploading: false,
+        ifnotdown: true,
         udico: require('./upload/上传照片74乘74.png'),
         success: 0,
         tags: [{
@@ -160,7 +169,7 @@
         description: ''
       }
     },
-    created () {
+    created() {
       document.title = '美食我来说'
     },
     methods: {
@@ -176,23 +185,23 @@
         }
       },
       compressImage: (file, success, error) => {
+        var _this = this
         // 图片小于1M不压缩
-        if (file.size < Math.pow(1024, 2)) {
+        if (file.size <= Math.pow(512, 2)) {
           return success(file);
         }
-
+        var filesize = file.size
         const name = file.name; //文件名
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = (e) => {
           const src = e.target.result;
-
           const img = new Image();
           img.src = src;
           img.onload = (e) => {
             const w = img.width;
             const h = img.height;
-            const quality = 0.6; // 默认图片质量为0.92
+            const quality = 0.4; // 默认图片质量为0.92
             //生成canvas
             const canvas = document.createElement('canvas');
             const ctx = canvas.getContext('2d');
@@ -229,7 +238,12 @@
             var files = new window.File([file], file.name, {
               type: 'image/jpeg'
             })
+            /*if (files.size > Math.pow(512, 2)) {
+              console.log(1)
+              return (files, (file)).compressImage
+            }else {*/
             success(files);
+            //}
           }
           img.onerror = (e) => {
             error(e);
@@ -241,9 +255,12 @@
       },
       uploadConfig(e) {
         var formData = new FormData();
+        this.isbeforeupload = false
+        this.isuploading = true
         this.compressImage(e.target.files[0], (file) => {
           console.log(file);
           //压缩图片
+          console.log(1)
           let _token = sessionStorage.getItem("token")
           formData.append('file', file);
           formData.append('Authorization', _token)
@@ -263,7 +280,6 @@
               this.picurl = this.picurl.replace("\\", "\/")
               this.picurl = this.picurl.replace("\\", "\/")
               this.success = json.success
-              this.isbeforeupload = false
             })
             .catch(function (error) {
               console.log('request failed: ', error)
@@ -323,6 +339,7 @@
       success: {
         handler: function (val, oldval) {
           if (val === 1) {
+            this.ifnotdown = false
             alert('图片上传成功！')
           } else {
             alert('图片上传失败，请稍后再试')
@@ -374,7 +391,7 @@
 
   #photoud {
     width: 96%;
-    height: 6rem;
+    min-height: 6rem;
     border: 1px white solid;
     border-top-left-radius: 2.5rem;
     border-top-right-radius: 2.5rem;
@@ -388,10 +405,30 @@
     align-items: center;
   }
 
+  .bfupload {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
   .uphoto {
     position: absolute;
     top: 6.5rem;
     font-size: 1.2rem;
+  }
+
+  .uploading {
+    margin-top: 5%;
+    color: cadetblue;
+  }
+
+  .uploading-text {
+    height: 2rem;
+    width: 9rem;
+    font-size: 1rem;
+    text-align: center;
   }
 
   #udico {
