@@ -259,7 +259,6 @@ export default {
 .admin-container {
   width: 100%;
   height: 100%;
-  background: url("./sousuo/sousuo.png");
 }
 
 .switch {

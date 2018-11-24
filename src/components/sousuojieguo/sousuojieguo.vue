@@ -7,12 +7,12 @@
       <router-link :to="{path:'/food',query: {foodid: page.id}}">
         <div :class="page.foodnum%2?classa:classb">
           <div :class="page.foodnum%2?imga:imgb">
-            <div :class="page1"><img :src="page.imgurl">
+            <div :class="page1"><img class="foodimg" :src="page.imgurl">
               <div :class="page2">
                 <img src="./grey.jpg">
                 <div :class="page3">
                   <i class="fa fa-star-o fa-2x"><span :class="page.star>10?star2:star1">{{page.collection}}</span></i>
-                  <i class="fa fa-heart-o fa-2x" style="margin-left:42%;"><span :class="page.heart>10?star2:star1">{{page.likecount}}</span></i>
+                  <i class="fa fa-heart-o fa-2x" style="margin-left:42%;"><span :class="page.heart>10?star2:star1">{{page.likeCount}}</span></i>
                   <i class="fa fa-comment-o fa-2x" style="margin-left:70%;"><span :class="page.info>10?star2:star1">{{page.review}}</span></i>
                 </div>
               </div>
@@ -103,25 +103,35 @@
     width: 100%;
     height: 25%;
     border-color: white;
+    margin: 0;
+    padding: 0;
   }
 
   .classa {
     height: 98%;
-    width: 98%;
+    width: 93%;
+    margin-left: 5%;
     border-style: dashed;
     border-top-width: 2px;
     border-right-width: 2px;
     border-bottom-width: 2px;
     border-left-width: 0;
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
     border-color: grey;
-    border-radius: 3%;
+
   }
 
   .imga {
     height: 88%;
     width: 45%;
+    margin-top: 0.5rem;
     position: relative;
     float: left;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
   }
 
   /* .imga img{
@@ -146,7 +156,8 @@
     border-bottom-width: 0;
     border-left-width: 2px;
     border-color: grey;
-    border-radius: 3%;
+    border-bottom-left-radius: 1rem;
+    border-top-left-radius: 1rem;
   }
 
   .imgb {
@@ -154,6 +165,10 @@
     width: 45%;
     position: relative;
     float: right;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
   }
 
   /* .imgb img{
@@ -232,19 +247,16 @@
 
   .page1 {
     position: relative;
-    width: 100%;
-    height: 100%;
+    width: 95%;
+    height: 95%;
+    border-radius: 1rem;
+    overflow: hidden;
   }
 
   .page1 img {
     float: left;
     height: 100%;
     width: 100%;
-    border-radius: 18%;
-    padding-right: 1%;
-    padding-top: 11%;
-    padding-bottom: 1%;
-    padding-left: 3%;
     z-index: 1;
     position: absolute;
   }
@@ -257,10 +269,10 @@
   }
 
   .page2 img {
-    height: 42%;
+    height: 30%;
     bottom: 0;
-    border-bottom-left-radius: 32%;
-    border-bottom-right-radius: 32%;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
     position: absolute;
     z-index: 2;
   }
@@ -327,4 +339,8 @@
     color: lightslategrey;
   }
 
+  .foodimg {
+    width: 100%;
+    height: auto !important;
+  }
 </style>

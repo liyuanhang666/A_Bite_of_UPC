@@ -132,7 +132,6 @@
   }
 
   .hello {
-    background-image: url("../sousuo/sousuo.png");
     background-size: 100%;
     display: flex;
     flex-direction: row;

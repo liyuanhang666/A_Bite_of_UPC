@@ -65,6 +65,7 @@
         reviewdetail: '',
         isreview: false,
         foodID: '',
+        foodNUM: -1,
         isreturn: false,
         foodinfo: '',
         iscollect: null,
@@ -81,12 +82,21 @@
     },
     methods: {
       collect() {
+        var foodINFOS = sessionStorage.getItem('foods')
+        foodINFOS = JSON.parse(foodINFOS)
+        var foodkey = sessionStorage.getItem('foodKEY')
         if (this.iscollect === false) {
-          this.iscollect = true;
-          this.collection++;
+          this.iscollect = true
+          this.collection++
+          foodINFOS[foodkey].collection++
+          foodINFOS = JSON.stringify(foodINFOS)
+          sessionStorage.setItem('foods', foodINFOS)
         } else if (this.iscollect === true) {
-          this.iscollect = false;
-          this.collection--;
+          this.iscollect = false
+          this.collection--
+          foodINFOS[foodkey].collection--
+          foodINFOS = JSON.stringify(foodINFOS)
+          sessionStorage.setItem('foods', foodINFOS)
         }
         let url = 'http://yb.upc.edu.cn:8084/foodshare/collect/add'
         let _token = sessionStorage.getItem("token")
@@ -102,12 +112,21 @@
           })
       },
       likeit() {
+        var foodINFOS = sessionStorage.getItem('foods')
+        foodINFOS = JSON.parse(foodINFOS)
+        var foodkey = sessionStorage.getItem('foodKEY')
         if (this.islike === false) {
-          this.islike = true;
-          this.likeCount++;
+          this.islike = true
+          this.likeCount++
+          foodINFOS[foodkey].likeCount++
+          foodINFOS = JSON.stringify(foodINFOS)
+          sessionStorage.setItem('foods', foodINFOS)
         } else if (this.islike === true) {
-          this.islike = false;
-          this.likeCount--;
+          this.islike = false
+          this.likeCount--
+          foodINFOS[foodkey].likeCount--
+          foodINFOS = JSON.stringify(foodINFOS)
+          sessionStorage.setItem('foods', foodINFOS)
         }
         let url = 'http://yb.upc.edu.cn:8084/foodshare/food/like'
         let _token = sessionStorage.getItem("token")
@@ -141,6 +160,12 @@
         this.$axios.post(url, data)
           .then(rsp => {
             if (rsp.status === 200) {
+              var foodINFOS = sessionStorage.getItem('foods')
+              var foodkey = sessionStorage.getItem('foodKEY')
+              foodINFOS = JSON.parse(foodINFOS)
+              foodINFOS[foodkey].review++
+              foodINFOS = JSON.stringify(foodINFOS)
+              sessionStorage.setItem('foods', foodINFOS)
               alert("评论成功！")
               location.reload()
             }
@@ -158,6 +183,7 @@
       Object.keys(Foods).forEach(function (key) {
         if (foodId === Foods[key].id.toString()) {
           foodInfo = Foods[key]
+          sessionStorage.setItem('foodKEY', key)
           document.title = foodInfo.name
         }
       })
@@ -279,7 +305,6 @@
   }
 
   .food {
-    background: url('./sousuo/sousuo.png');
     background-size: 100%, 100%;
     min-height: 22rem;
     padding-top: 1rem;

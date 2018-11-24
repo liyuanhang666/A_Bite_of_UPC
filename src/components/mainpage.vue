@@ -15,6 +15,9 @@
         </div>
       </transition>
       <img :src="plus" id="plus" @click="showud">
+      <router-link to="/todayfood">
+        <img :src="todayfood" id="todayfood">
+      </router-link>
       <img :src="logo" id="logo">
     </div>
     <mpselect id="mpselect"></mpselect>
@@ -40,6 +43,7 @@
         menu: require('../assets/images/首页-个人中心.png'),
         searchi: require('../assets/images/主页搜索.png'),
         plus: require('../assets/images/添加 (2).png'),
+        todayfood: require('../assets/images/美食.png'),
         logo: require('../assets/images/logo.png'),
         admin: require('../assets/images/admin-manage.png'),
         ifadmin: false,
@@ -314,6 +318,15 @@
   #pinf {
     font-family: XinHuaKaiTi;
     color: white;
+  }
+
+  #todayfood {
+    z-index: 3;
+    position: absolute;
+    right: 1rem;
+    top: 10rem;
+    height: 2rem;
+    display: block;
   }
 
   #mpselect {

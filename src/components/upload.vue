@@ -5,7 +5,6 @@
         <div id="photoud" v-show="ifnotdown">
           <div class="uploading" v-show="isuploading">
             <i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
-            <span class="sr-only"></span>
             <div class="uploading-text">正在上传</div>
           </div>
           <div class="bfupload" v-show="isbeforeupload">
@@ -370,7 +369,6 @@
   }
 
   .upload-container {
-    background: url('./sousuo/sousuo.png');
     background-size: 100%, 100%;
     min-height: 46rem;
     width: 100%;

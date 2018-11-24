@@ -57,7 +57,7 @@
     <input type="text" id="inputbox" v-model="sousuo" @focus="myFocus(this,'black')" style=" marginLeft:10%;marginTop:10%; text-align:center;height:35px;color:grey; width:80%; border-radius:25px; border: 1px solid #dddee1;outline:0; " />
 
     <router-link to="/result">
-      <i-button type="ghost" size="large" shape="circle" @click="give" style="width:30%;marginLeft:35%;marginTop:5%;color:white;">开启美食之旅</i-button>
+      <button @click="give" class="submit-button" style="">开启美食之旅</button>
     </router-link>
   </div>
 </template>
@@ -289,7 +289,6 @@
   }
 
   .hello {
-    background: url("./sousuo.png");
     background-size: 100%;
     width: 100%;
     height: 100%;
@@ -318,6 +317,19 @@
     display: inline-flex;
     flex-wrap: nowrap;
     align-items: center;
+  }
+
+  .submit-button {
+    width:30%;
+    margin-left:35%;
+    margin-top:5%;
+    color:white;
+    text-align:center;
+    background: none;
+    height: 2.2rem;
+    border: 1px white solid;
+    border-radius: 1.5rem;
+    outline: none;
   }
 
 </style>
