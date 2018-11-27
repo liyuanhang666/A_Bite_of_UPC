@@ -8,8 +8,10 @@
             <div class="uploading-text">正在上传</div>
           </div>
           <div class="bfupload" v-show="isbeforeupload">
+            <a href="javascript:;" class="a-upload">
+              <input class="puico" type="file" value="" id="file" accept="image/*" @change="uploadConfig"></input>
+            </a>
             <img :src="udico" id="udico">
-            <input class="puico" type="file" value="" id="file" accept="image/*" @change="uploadConfig" style="none"></input>
             <span class="uphoto">上传照片</span>
           </div>
         </div>
@@ -404,17 +406,25 @@
   }
 
   .bfupload {
+    position: relative;
+    top: 0;
+    left: 0;
     width: 100%;
+    height: 6rem;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
   }
 
-  .uphoto {
+  .a-upload {
     position: absolute;
-    top: 6.5rem;
-    font-size: 1.2rem;
+    top: 0rem;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: white;
+    z-index: 999;
   }
 
   .uploading {
@@ -431,14 +441,30 @@
 
   #udico {
     position: absolute;
-    width: 4rem;
-    top: 2.5rem;
+    width: 18%;
+    top: 0rem;
+    left: 41%;
+    z-index: 990;
+  }
+
+  .uphoto {
+    position: absolute;
+    top: 4rem;
+    left: 35%;
+    font-size: 1.2rem;
+    z-index: 998;
+    width: 30%;
+    z-index: 990;
+    color: gray;
   }
 
   .puico {
     color: gray;
     font-size: 1.2rem;
     opacity: 0;
+    width: 100%;
+    height: 6rem;
+    z-index: 999;
   }
 
   #submit {

@@ -171,6 +171,7 @@
     height: 95%;
     border: 1px rgb(79, 79, 79) dashed;
     border-radius: 1rem;
+    overflow: hidden;
   }
 
   .imge {
